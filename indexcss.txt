@@ -1,0 +1,112 @@
+*{
+    padding: 0;
+    margin: 0;
+    box-sizing: border-box;
+}
+
+body{
+    font-family:sans-serif;
+    background-color: rgb(232, 214, 243);  
+}
+
+.parentContainer{
+    display: flex;
+    justify-content: center;
+    align-content: center;
+}
+
+.container{
+    background: rgb(238,174,202);
+    background: radial-gradient(circle, rgba(238,174,202,1) 16%, rgba(148,233,233,1) 93%);
+    height : 460px;
+    width : 220px;
+    position : relative;
+    top : 150px;
+    border-radius: 5px;
+    z-index : 10;
+    box-shadow : 0 0 40px whitesmoke;
+    display : flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    border : 2px solid whitesmoke;
+    
+}
+
+.top, .bottom{
+    height : 220px;
+    width : 100%;
+   
+}
+
+.displayTime{
+    /* border : 2px solid black; */
+    margin : 10px;
+    height : 190px;
+    padding : 10px;
+}
+
+.exactTime{
+    border : 2px solid whitesmoke;
+    height: 170px;
+    display : flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 22px;
+    font-weight: 600;
+    border-radius: 5px;
+}
+
+
+.bottom{
+    display: flex;
+    justify-content: space-around;
+    flex-direction: column;
+  
+}
+
+#status, .sameDiv{
+    text-align: center;
+}
+
+.period, .buttons{
+    display: flex;
+    justify-content: space-around;
+}
+
+
+
+.buttons button{
+    display: inline-block;
+    height : 30px;
+    width : 80px;
+    background-color: black;
+    border: none;
+    border-radius: 5px;
+    color : whitesmoke;
+}
+
+.buttons button:hover{
+    box-shadow: 0 0 10px #fcfcfa;
+    cursor : pointer;
+    transition: .3s;
+    background-color: rgb(83, 83, 83);
+}
+
+.sameDiv h3, .sameDiv span{
+    display : inline-block;
+    margin : 5px;
+    padding-top : 5px;
+    font-family: 22px;   
+    font-weight: 600;
+}
+
+.sameDiv span, #status{
+    color : whitesmoke;
+}
+
+.sameDiv h3:hover{
+    cursor : pointer; 
+    color : rgb(83, 83, 83);
+    transition: .3s;
+}

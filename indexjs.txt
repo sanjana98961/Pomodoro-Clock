@@ -1,0 +1,197 @@
+let spanIdMinutes = document.getElementById("minutes");
+let spanIdSeconds = document.getElementById("seconds");
+let headingIdStatus = document.getElementById("status");
+let sessionTime = document.getElementById("sessionTime");
+let breakTime = document.getElementById("breakTime");
+let Sessionminus = document.getElementById("sessionminus");
+let Sessionplus = document.getElementById("sessionplus");
+let breakminus = document.getElementById("breakminus");
+let breakplus = document.getElementById("breakplus");
+let buttonStart = document.getElementById("start");
+let buttonReset = document.getElementById("reset");
+
+var flag = true; var tempSession = 0; var tempBreak = 0;
+var sessionMinutes = 0; var setInt; var countSessions = 0;
+var breakMinutes = 0;  var setIntBreak;
+
+var Sessionseconds = 0; var SessionMinutes = 0;
+var Breakseconds = 0; var BreakMinutes = 0;
+
+Sessionminus.addEventListener("click", function () {
+    if (sessionMinutes == 0) {
+        alert("Time cannot be less than Zero");
+    } else {
+        sessionMinutes--;
+        sessionTime.innerHTML = `${sessionMinutes} min`;
+    }
+});
+
+Sessionplus.addEventListener("click", function () {
+    if (tempSession == 0) {
+        sessionMinutes = tempSession + sessionMinutes + 1;
+    } else {
+        sessionMinutes = tempSession + 1;
+    }
+    sessionTime.innerHTML = `${sessionMinutes} min`;
+});
+
+breakminus.addEventListener("click", function () {
+    if (breakMinutes == 0) {
+        alert("Time cannot be less than Zero");
+    } else {
+        breakMinutes--;
+        breakTime.innerHTML = `${breakMinutes} min`;
+    }
+});
+
+
+breakplus.addEventListener("click", function () {
+    if (tempBreak == 0) {
+        breakMinutes = tempBreak + breakMinutes + 1;
+    } else {
+        breakMinutes = tempBreak + 1;
+    }
+    breakTime.innerHTML = `${breakMinutes} min`;
+});
+
+buttonReset.addEventListener("click", function () {
+    sessionMinutes = 0; countSessions = 0;
+    breakMinutes = 0; tempBreak = 0; tempSession = 0;
+    Sessionseconds = 0; SessionMinutes = 0;
+    Breakseconds = 0; BreakMinutes = 0;
+    clearInterval(setInt);
+    clearInterval(setIntBreak);
+    sessionTime.innerHTML = "0 min";
+    breakTime.innerHTML = "0 min";
+    spanIdMinutes.innerHTML = "00";
+    spanIdSeconds.innerHTML = "00";
+    headingIdStatus.innerHTML = `Session ${countSessions}`;
+    buttonStart.value = "Start";
+    buttonStart.innerHTML = "Start";
+    Sessionminus.style.cursor = "pointer";
+    Sessionplus.style.cursor = "pointer";
+    breakminus.style.cursor = "pointer";
+    breakplus.style.cursor = "pointer";
+  
+});
+
+buttonStart.addEventListener("click", function () {
+    if (buttonStart.value == "Start") {
+        if (flag === false) {
+            breakTimeStart();
+        } else {
+            sessionTimeStart();
+        }
+    }else{
+        if (flag === true) {
+            var tempSessionSeconds = Sessionseconds;
+            buttonStart.value = "Start";
+            buttonStart.innerHTML = "Start";
+            clearInterval(setInt);
+            Sessionseconds = tempSessionSeconds;
+        }else{
+            var tempBreakSeconds = Breakseconds;
+            buttonStart.value = "Start";
+            buttonStart.innerHTML = "Start";
+            clearInterval(setIntBreak);
+            Breakseconds = tempBreakSeconds;
+        }
+    }
+});
+
+function sessionTimeStart() {
+    buttonStart.value = "Pause";
+    buttonStart.innerHTML = "Pause";
+    Sessionminus.style.cursor = "not-allowed";
+    Sessionplus.style.cursor = "not-allowed";
+    breakminus.style.cursor = "not-allowed";
+    breakplus.style.cursor = "not-allowed";
+    headingIdStatus.innerHTML = `Session ${countSessions}`;
+    setInt = setInterval(function(){
+        if(Sessionseconds==60){
+            Sessionseconds = 0;
+            SessionMinutes++;
+            if(SessionMinutes == sessionMinutes){
+                SessionMinutes = 0;
+                Sessionseconds = 0;
+                clearInterval(setInt);
+                if(breakMinutes > 0){
+                    breakTimeStart();
+                    // flag = true;    
+                }else{
+                    counting();
+                }
+            }
+           
+        }else{
+            Sessionseconds++;
+        }
+        if(Sessionseconds <10 ){
+            spanIdSeconds.innerHTML = '0' + Sessionseconds.toString();
+        }else{
+            spanIdSeconds.innerHTML = Sessionseconds;
+        }          
+                
+        if(SessionMinutes < 10){
+            spanIdMinutes.innerHTML = '0' + SessionMinutes.toString();
+        }else{
+            spanIdMinutes.innerHTML = SessionMinutes;
+        }
+    },1000);
+    
+}
+
+
+function breakTimeStart() {
+    buttonStart.value = "Pause";
+    buttonStart.innerHTML = "Pause";
+    Sessionminus.style.cursor = "not-allowed";
+    Sessionplus.style.cursor = "not-allowed";
+    breakminus.style.cursor = "not-allowed";
+    breakplus.style.cursor = "not-allowed";
+    headingIdStatus.innerHTML = "Break!";
+    setIntBreak = setInterval(function(){
+            flag = false;
+            if(Breakseconds==60){
+                Breakseconds = 0;
+                BreakMinutes++;
+                if(BreakMinutes == breakMinutes){
+                    Breakseconds = 0;
+                    BreakMinutes = 0;
+                    clearInterval(setIntBreak);
+                    counting();
+                    flag = true;
+                }
+            }else{
+                Breakseconds++;
+            }
+            if(Breakseconds < 10){
+                spanIdSeconds.innerHTML = '0' + Breakseconds.toString();
+            }else{
+                spanIdSeconds.innerHTML = Breakseconds;
+            }          
+                    
+            if(BreakMinutes < 10){
+                spanIdMinutes.innerHTML = '0' + BreakMinutes.toString();
+            }else{
+                spanIdMinutes.innerHTML = BreakMinutes;
+            }
+    
+        },1000);
+
+      
+
+}
+
+
+function counting() {
+    countSessions++;
+    headingIdStatus.innerHTML = `Session ${countSessions}`;
+    buttonStart.value = "Start";
+    buttonStart.innerHTML = "Start";
+    Sessionminus.style.cursor = "pointer";
+    Sessionplus.style.cursor = "pointer";
+    breakminus.style.cursor = "pointer";
+    breakplus.style.cursor = "pointer";
+
+}
